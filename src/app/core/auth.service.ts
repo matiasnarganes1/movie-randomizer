@@ -39,10 +39,15 @@ export class AuthService {
   }
 
   async sendMagicLink(email: string) {
+    const basePath = window.location.pathname.endsWith('/')
+      ? window.location.pathname
+      : window.location.pathname + '/';
+
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: window.location.origin + '/movie-randomizer/' },
+      options: { emailRedirectTo: window.location.origin + basePath },
     });
+
     if (error) throw error;
   }
 
